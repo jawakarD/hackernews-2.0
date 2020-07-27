@@ -1,24 +1,102 @@
-# README
+## Example queries
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### links 
+```graphql
+{
+  allLinks{
+    id
+    url
+    description
+    postedBy {
+      id
+      name
+      email 
+      votes {
+        id
+      }
+    }
+  }
+}	
+```
 
-Things you may want to cover:
+### Create link
+```graphql
+mutation {
+  createLink(input: {url: "https://npmjs.com/graphql-tools", description: "Just following guide"}){
+    link{
+      id
+      url
+      description	
+      postedBy {
+        id
+        name
+      }
+    }
+  }
+}
+```
 
-* Ruby version
+### Signup
+```graphql
+mutation{
+  createUser(
+    input: {
+      name: "Jawakar", 
+      authProvider: {
+        credentials: {
+          email: "jawakar2@gmail.com",
+          password: "1233456"
+        }	
+  		},	
+  	}
+  ){
+    user  {
+      id
+      name
+      email
+    }
+  }
+}
+```
 
-* System dependencies
+### Login
+```graphql
+mutation{
+  signinUser(
+    input: {
+      credentials: {
+        email: "jawakar2@gmail.com",
+        password:"1233456"
+      }
+    }
+  ){
+    token
+    user{
+      id
+      name
+      email
+    }
+  }
+}
+```
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Vote for link
+```graphql
+mutation{
+  createVote(input: {linkId: 14}){
+    vote{
+      id
+      link {
+        id
+        url
+        description
+      },
+      user {
+        id
+        name
+        email
+      }
+    }
+  }
+}
+```
